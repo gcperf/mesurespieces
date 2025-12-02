@@ -2,21 +2,18 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>GC Epox-Design – Calcul surface thermolaquage</title>
+  <title>GC Epox-Design – Calcul surface & devis thermolaquage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     :root {
       --bg: #050510;
-      --bg-soft: #10111b;
       --bg-card: #151624;
       --border: #272842;
-      --accent: #ff4b8a;
-      --accent-soft: rgba(255,75,138,0.1);
-      --accent-2: #05f2db;
+      --accent: #0a8cff;      /* bleu métallisé */
+      --accent-2: #00c2ff;
       --text: #f7f7ff;
       --muted: #9b9dc0;
-      --danger: #ff7575;
     }
 
     * { box-sizing: border-box; }
@@ -37,13 +34,14 @@
       gap: 16px;
     }
 
+    /* HEADER */
     .header {
       display: flex;
       gap: 16px;
       align-items: center;
       padding: 14px 16px;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(5,242,219,0.14), rgba(255,75,138,0.08));
+      background: linear-gradient(135deg, rgba(0,194,255,0.2), rgba(10,140,255,0.18));
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 18px 40px rgba(0,0,0,0.65);
       backdrop-filter: blur(20px);
@@ -61,7 +59,6 @@
       justify-content: center;
       overflow: hidden;
     }
-
     .logo-wrap img {
       max-width: 100%;
       max-height: 100%;
@@ -78,7 +75,6 @@
       align-items: baseline;
       gap: 6px;
     }
-
     .brand-title .highlight { color: var(--accent-2); }
 
     .brand-sub {
@@ -108,36 +104,27 @@
       font-size: 0.8rem;
       color: var(--muted);
     }
-
     .header-right strong { color: var(--accent-2); }
 
+    /* CARDS */
     .card {
       background: radial-gradient(circle at top left,#252747 0,#151624 40%,#090914 100%);
       border-radius: 16px;
-      padding: 14px 14px 12px;
+      padding: 14px;
       border: 1px solid var(--border);
       box-shadow: 0 14px 32px rgba(0,0,0,0.6);
-    }
-
-    .card-soft {
-      background: rgba(10,11,25,0.92);
-      border-radius: 14px;
-      padding: 10px 12px;
-      border: 1px solid rgba(68,72,125,0.9);
     }
 
     .section-title {
       font-size: 0.98rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     .section-title::before {
       content: "";
-      display: inline-block;
       width: 6px;
       height: 18px;
       border-radius: 999px;
@@ -160,12 +147,12 @@
       font-size: 0.88rem;
       margin-bottom: 8px;
       outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
     }
 
     input:focus, select:focus {
       border-color: var(--accent-2);
-      box-shadow: 0 0 0 1px rgba(5,242,219,0.35);
+      box-shadow: 0 0 0 1px rgba(0,194,255,0.4);
       background: #050617;
     }
 
@@ -180,47 +167,8 @@
       min-width: 145px;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-      padding: 3px;
-      border-radius: 999px;
-      background: rgba(9,10,30,0.9);
-      border: 1px solid rgba(72,75,129,0.9);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 7px 4px;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.86rem;
-      cursor: pointer;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg,var(--accent-2),var(--accent));
-      color: #050510;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
-    }
-
     .small {
       font-size: 0.76rem;
-      color: var(--muted);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      background: rgba(12,13,28,0.92);
-      border: 1px solid rgba(94,98,160,0.9);
-      margin-left: 4px;
       color: var(--muted);
     }
 
@@ -232,32 +180,20 @@
       font-weight: 600;
       padding: 8px 12px;
       transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      background: linear-gradient(135deg,#0a8cff,#0060ff);
+      color: #fdfdff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
     }
-
     button:active { transform: scale(0.97); }
 
-    .btn-main {
-      background: radial-gradient(circle at top left,var(--accent-2),var(--accent));
-      color: #050510;
-      width: 100%;
-      margin-top: 4px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.65);
-    }
-
     .btn-secondary {
-      background: rgba(16,18,40,0.94);
-      color: var(--muted);
-      border: 1px solid rgba(84,88,145,0.9);
+      background: linear-gradient(135deg,#0c1435,#123a72);
     }
-
     .btn-danger {
-      background: rgba(90,20,35,0.9);
-      color: #ffd5d5;
-      border: 1px solid rgba(255,117,117,0.9);
+      background: linear-gradient(135deg,#ff4b4b,#c71c1c);
     }
 
-    .btn-main:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.75); }
-    .btn-secondary:hover { background: rgba(25,27,60,0.96); }
+    .btn-full { width: 100%; margin-top: 4px; }
 
     .result {
       margin-top: 8px;
@@ -267,30 +203,25 @@
       background: radial-gradient(circle at top,#22243f 0,#0a0b17 55%,#060712 100%);
       font-size: 0.9rem;
     }
-
     .result strong { color: var(--accent-2); }
-    .result em { color: var(--muted); }
 
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.83rem;
     }
-
     th, td {
       border-bottom: 1px solid rgba(46,48,85,0.9);
       padding: 4px 6px;
       text-align: left;
       white-space: nowrap;
     }
-
     th {
       background: radial-gradient(circle at top,#2a2d52 0,#16172a 55%);
       position: sticky;
       top: 0;
       z-index: 1;
     }
-
     .text-right { text-align: right; }
 
     .totaux {
@@ -298,21 +229,42 @@
       font-size: 0.9rem;
       color: var(--text);
     }
-
     .totaux strong { color: var(--accent-2); }
 
-    .footer {
-      margin-top: 6px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(4,5,18,0.96);
-      border: 1px solid rgba(58,60,102,0.85);
-      font-size: 0.78rem;
-      color: var(--muted);
+    /* PARAMS ACCORDION */
+    .params-header {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px 16px;
+      align-items: center;
       justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(7,10,30,0.9);
+      border: 1px solid rgba(70,90,140,0.9);
+      margin-bottom: 8px;
+    }
+    .params-header span {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .params-header small {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .params-chevron {
+      font-size: 1rem;
+    }
+    .params-body {
+      display: none;
+      margin-top: 4px;
+    }
+
+    .card-soft {
+      background: rgba(10,11,25,0.92);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(68,72,125,0.9);
+      margin-bottom: 8px;
     }
 
     @media (max-width: 700px) {
@@ -336,13 +288,13 @@
           <span>GC</span><span class="highlight">Epox-Design</span>
         </div>
         <div class="brand-sub">
-          Calculateur surface & devis thermolaquage – tubes, limons, garde-corps, pièces soudées.
+          Calculateur surface & devis – thermolaquage, sablage, limons, garde-corps, pièces soudées.
         </div>
         <div class="brand-tags">
           <span class="tag">Sablage</span>
           <span class="tag">Thermolaquage</span>
           <span class="tag">Acier · Inox · Alu</span>
-          <span class="tag">Tarifs 2025</span>
+          <span class="tag">Tarifs atelier</span>
         </div>
       </div>
 
@@ -353,461 +305,498 @@
       </div>
     </header>
 
-    <!-- PARAMETRES / TARIFS -->
+    <!-- PARAMETRES (ACCORDION) -->
     <section class="card">
-      <div class="section-title">Paramètres devis & tarifs 2025</div>
-
-      <div class="row">
+      <div class="params-header" id="paramsToggle">
         <div>
-          <label>Tarif peinture libre (€/m²)</label>
-          <input type="number" id="prixM2" placeholder="ex : 35" />
+          <span>Paramètres & tarifs (thermolaquage + sablage)</span><br />
+          <small>Clique pour afficher / masquer</small>
         </div>
-        <div>
-          <label>Conso poudre (kg/m²)</label>
-          <input type="number" id="poudreM2" placeholder="ex : 0.12" />
-        </div>
+        <div class="params-chevron" id="paramsChevron">▼</div>
       </div>
 
-      <div class="row">
+      <div class="params-body" id="paramsBody">
+        <!-- GENERAUX -->
         <div class="card-soft">
-          <div class="section-title">Tôlerie – prix HT au m²</div>
-          <div class="small">Modifiable, d’après ta grille.</div>
-
-          <label>Tôle noire – laq 2 f</label>
-          <input type="number" id="tarif_tole_noire_laq2" value="50" />
-
-          <label>Tôle EZ / acier non calaminé – laq 1 f</label>
-          <input type="number" id="tarif_tole_ez_laq1" value="25" />
-
-          <label>Tôle EZ / acier non calaminé – laq 2 f</label>
-          <input type="number" id="tarif_tole_ez_laq2" value="33" />
-
-          <label>Limon avec plis – laq 2 f avec plis</label>
-          <input type="number" id="tarif_limon_plis" value="38" />
-
-          <label>Tôle alu + galva pleine ou perforée – laq 1 f</label>
-          <input type="number" id="tarif_tole_alu_galva_laq1" value="25" />
-
-          <label>Tôle alu + galva pleine ou perforée – laq 2 f</label>
-          <input type="number" id="tarif_tole_alu_galva_laq2" value="32" />
-
-          <label>Tôle alu + galva pleine ou perforée – laq 2 f avec plis</label>
-          <input type="number" id="tarif_tole_alu_galva_plis" value="42" />
-
-          <label>Tôle alu petit format (&lt; 1 m²) – laq 2 f</label>
-          <input type="number" id="tarif_tole_alu_petit" value="40" />
-
-          <label>Inox / Fonte – laq 1 f</label>
-          <input type="number" id="tarif_inox_laq1" value="35" />
-
-          <label>Inox / Fonte – laq 2 f</label>
-          <input type="number" id="tarif_inox_laq2" value="47" />
-
-          <label>Tôle perforée acier – laq 2 f</label>
-          <input type="number" id="tarif_tole_perforee" value="50" />
+          <div class="section-title">Paramètres généraux</div>
+          <div class="row">
+            <div>
+              <label>Tarif libre thermolaquage (€/m²)</label>
+              <input type="number" id="prixM2Libre" placeholder="ex : 35" />
+            </div>
+            <div>
+              <label>Tarif libre thermolaquage (€/ml)</label>
+              <input type="number" id="prixMLLibre" placeholder="ex : 15" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Conso poudre (kg/m²)</label>
+              <input type="number" id="poudreM2" placeholder="ex : 0.12" />
+            </div>
+          </div>
         </div>
 
+        <!-- THERMOLAQUAGE m² / ml -->
+        <div class="row">
+          <div class="card-soft">
+            <div class="section-title">Tôlerie thermolaquage</div>
+            <label>Tôle noire – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_tole_noire_laq2_m2" value="50" />
+            <label>Tôle noire – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_tole_noire_laq2_ml" value="50" />
+
+            <label>Tôle EZ / acier non calaminé – laq 1 f (€/m²)</label>
+            <input type="number" id="tarif_tole_ez_laq1_m2" value="25" />
+            <label>Tôle EZ / acier non calaminé – laq 1 f (€/ml)</label>
+            <input type="number" id="tarif_tole_ez_laq1_ml" value="25" />
+
+            <label>Tôle EZ / acier non calaminé – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_tole_ez_laq2_m2" value="33" />
+            <label>Tôle EZ / acier non calaminé – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_tole_ez_laq2_ml" value="33" />
+
+            <label>Limon avec plis – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_limon_plis_m2" value="38" />
+            <label>Limon avec plis – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_limon_plis_ml" value="38" />
+
+            <label>Tôle alu/galva pleine ou perforée – laq 1 f (€/m²)</label>
+            <input type="number" id="tarif_tole_alu_galva_laq1_m2" value="25" />
+            <label>Tôle alu/galva pleine ou perforée – laq 1 f (€/ml)</label>
+            <input type="number" id="tarif_tole_alu_galva_laq1_ml" value="25" />
+
+            <label>Tôle alu/galva pleine ou perforée – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_tole_alu_galva_laq2_m2" value="32" />
+            <label>Tôle alu/galva pleine ou perforée – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_tole_alu_galva_laq2_ml" value="32" />
+
+            <label>Tôle alu/galva – laq 2 f avec plis (€/m²)</label>
+            <input type="number" id="tarif_tole_alu_galva_plis_m2" value="42" />
+            <label>Tôle alu/galva – laq 2 f avec plis (€/ml)</label>
+            <input type="number" id="tarif_tole_alu_galva_plis_ml" value="42" />
+
+            <label>Tôle alu petit format (&lt; 1 m²) – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_tole_alu_petit_m2" value="40" />
+            <label>Tôle alu petit format – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_tole_alu_petit_ml" value="40" />
+
+            <label>Inox / fonte – laq 1 f (€/m²)</label>
+            <input type="number" id="tarif_inox_laq1_m2" value="35" />
+            <label>Inox / fonte – laq 1 f (€/ml)</label>
+            <input type="number" id="tarif_inox_laq1_ml" value="35" />
+
+            <label>Inox / fonte – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_inox_laq2_m2" value="47" />
+            <label>Inox / fonte – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_inox_laq2_ml" value="47" />
+
+            <label>Tôle perforée acier – laq 2 f (€/m²)</label>
+            <input type="number" id="tarif_tole_perforee_m2" value="50" />
+            <label>Tôle perforée acier – laq 2 f (€/ml)</label>
+            <input type="number" id="tarif_tole_perforee_ml" value="50" />
+          </div>
+
+          <div class="card-soft">
+            <div class="section-title">Gardes-corps thermolaquage</div>
+
+            <label>GC barreautés – neuf (€/m²)</label>
+            <input type="number" id="tarif_gc_barreautes_neuf_m2" value="39" />
+            <label>GC barreautés – neuf (€/ml)</label>
+            <input type="number" id="tarif_gc_barreautes_neuf_ml" value="39" />
+
+            <label>GC barreautés – rénovation (€/m²)</label>
+            <input type="number" id="tarif_gc_barreautes_reno_m2" value="48.5" />
+            <label>GC barreautés – rénovation (€/ml)</label>
+            <input type="number" id="tarif_gc_barreautes_reno_ml" value="48.5" />
+
+            <label>GC tôles – neuf (€/m²)</label>
+            <input type="number" id="tarif_gc_toles_neuf_m2" value="47" />
+            <label>GC tôles – neuf (€/ml)</label>
+            <input type="number" id="tarif_gc_toles_neuf_ml" value="47" />
+
+            <label>GC tôles – rénovation (€/m²)</label>
+            <input type="number" id="tarif_gc_toles_reno_m2" value="51.5" />
+            <label>GC tôles – rénovation (€/ml)</label>
+            <input type="number" id="tarif_gc_toles_reno_ml" value="51.5" />
+
+            <label>GC alu galva (€/m²)</label>
+            <input type="number" id="tarif_gc_alu_galva_m2" value="34" />
+            <label>GC alu galva (€/ml)</label>
+            <input type="number" id="tarif_gc_alu_galva_ml" value="34" />
+
+            <label>GC galva / alu forgé (€/m²)</label>
+            <input type="number" id="tarif_gc_galva_forge_m2" value="37" />
+            <label>GC galva / alu forgé (€/ml)</label>
+            <input type="number" id="tarif_gc_galva_forge_ml" value="37" />
+
+            <label>GC forgé – neuf (€/m²)</label>
+            <input type="number" id="tarif_gc_forge_neuf_m2" value="79" />
+            <label>GC forgé – neuf (€/ml)</label>
+            <input type="number" id="tarif_gc_forge_neuf_ml" value="79" />
+
+            <label>GC forgé – rénovation (€/m²)</label>
+            <input type="number" id="tarif_gc_forge_reno_m2" value="95" />
+            <label>GC forgé – rénovation (€/ml)</label>
+            <input type="number" id="tarif_gc_forge_reno_ml" value="95" />
+
+            <label>GC mikado (€/m²)</label>
+            <input type="number" id="tarif_gc_mikado_m2" value="60" />
+            <label>GC mikado (€/ml)</label>
+            <input type="number" id="tarif_gc_mikado_ml" value="60" />
+
+            <label>GC barreautage chargé – neuf (€/m²)</label>
+            <input type="number" id="tarif_gc_barreautage_neuf_m2" value="47" />
+            <label>GC barreautage chargé – neuf (€/ml)</label>
+            <input type="number" id="tarif_gc_barreautage_neuf_ml" value="47" />
+
+            <label>GC barreautage chargé – rénovation (€/m²)</label>
+            <input type="number" id="tarif_gc_barreautage_reno_m2" value="55" />
+            <label>GC barreautage chargé – rénovation (€/ml)</label>
+            <input type="number" id="tarif_gc_barreautage_reno_ml" value="55" />
+          </div>
+        </div>
+
+        <!-- SABLAGE SEUL -->
         <div class="card-soft">
-          <div class="section-title">Gardes-corps – HT au m² (maxi 6 m)</div>
-          <div class="small">Neuf / rénovation.</div>
-
-          <label>GC barreautés – neuf</label>
-          <input type="number" id="tarif_gc_barreautes_neuf" value="39" />
-
-          <label>GC barreautés – rénovation</label>
-          <input type="number" id="tarif_gc_barreautes_reno" value="48.5" />
-
-          <label>GC tôles – neuf</label>
-          <input type="number" id="tarif_gc_toles_neuf" value="47" />
-
-          <label>GC tôles – rénovation</label>
-          <input type="number" id="tarif_gc_toles_reno" value="51.5" />
-
-          <label>GC alu galva</label>
-          <input type="number" id="tarif_gc_alu_galva" value="34" />
-
-          <label>GC galva / alu forgé</label>
-          <input type="number" id="tarif_gc_galva_forge" value="37" />
-
-          <label>GC forgé – neuf</label>
-          <input type="number" id="tarif_gc_forge_neuf" value="79" />
-
-          <label>GC forgé – rénovation</label>
-          <input type="number" id="tarif_gc_forge_reno" value="95" />
-
-          <label>GC mikado</label>
-          <input type="number" id="tarif_gc_mikado" value="60" />
-
-          <label>GC barreautage chargé – neuf</label>
-          <input type="number" id="tarif_gc_barreautage_neuf" value="47" />
-
-          <label>GC barreautage chargé – rénovation</label>
-          <input type="number" id="tarif_gc_barreautage_reno" value="55" />
+          <div class="section-title">Sablage seul</div>
+          <div class="row">
+            <div>
+              <label>Sablage acier – prix (€/m²)</label>
+              <input type="number" id="tarif_sablage_acier_m2" value="15" />
+              <label>Sablage acier – prix (€/ml)</label>
+              <input type="number" id="tarif_sablage_acier_ml" value="15" />
+            </div>
+            <div>
+              <label>Sablage alu – prix (€/m²)</label>
+              <input type="number" id="tarif_sablage_alu_m2" value="18" />
+              <label>Sablage alu – prix (€/ml)</label>
+              <input type="number" id="tarif_sablage_alu_ml" value="18" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Sablage inox – prix (€/m²)</label>
+              <input type="number" id="tarif_sablage_inox_m2" value="20" />
+              <label>Sablage inox – prix (€/ml)</label>
+              <input type="number" id="tarif_sablage_inox_ml" value="20" />
+            </div>
+            <div>
+              <label>Sablage tôle perforée – prix (€/m²)</label>
+              <input type="number" id="tarif_sablage_perfore_m2" value="22" />
+              <label>Sablage tôle perforée – prix (€/ml)</label>
+              <input type="number" id="tarif_sablage_perfore_ml" value="22" />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Sablage premium grenaille inox (€/m²)</label>
+              <input type="number" id="tarif_sablage_premium_m2" value="28" />
+              <label>Sablage premium grenaille inox (€/ml)</label>
+              <input type="number" id="tarif_sablage_premium_ml" value="28" />
+            </div>
+          </div>
         </div>
       </div>
-
-      <p class="small" style="margin-top:6px;">
-        Tu choisis ces types de tarif plus bas dans chaque pièce, comme sur ta grille papier.
-      </p>
     </section>
 
-    <!-- CALCULATEUR -->
+    <!-- CALCUL PIECE (GEOMETRIE + LIMON + SUPPORTS) -->
     <section class="card">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="simple">Forme simple</button>
-        <button class="tab-btn" data-tab="limon">Limon / pièce soudée</button>
-      </div>
+      <div class="section-title">Calcul pièce (forme simple + limon / pièces soudées)</div>
 
-      <!-- FORMES SIMPLES -->
-      <div class="tab-content" id="tab-simple">
-        <div class="section-title">Forme simple</div>
-
-        <div class="row">
-          <div>
-            <label>Type de pièce (géométrie)</label>
-            <select id="simpleType">
-              <option value="plaque">Plaque / tôle</option>
-              <option value="tubeRect">Tube carré / rectangulaire</option>
-              <option value="tubeRond">Tube rond</option>
-              <option value="corniereL">Cornière L</option>
-              <option value="profilU">Profil U</option>
-              <option value="plat">Plat (fer plat)</option>
-              <option value="perimetreLibre">Profil spécial (périmètre connu)</option>
-            </select>
-          </div>
-          <div>
-            <label>Nom / référence pièce</label>
-            <input type="text" id="simpleRef" placeholder="ex : GC barreautés palier" />
-          </div>
+      <div class="row">
+        <div>
+          <label>Nom / référence pièce</label>
+          <input type="text" id="pieceRef" placeholder="ex : Limon gauche, GC palier..." />
         </div>
-
-        <label>Type de tarif (comme la photo)</label>
-        <select id="simpleTarifType">
-          <option value="">Tarif libre (champ en haut)</option>
-          <optgroup label="Tôlerie">
-            <option value="tole_noire_laq2">Tôle noire – laq 2 f</option>
-            <option value="tole_ez_laq1">Tôle EZ / acier non calaminé – laq 1 f</option>
-            <option value="tole_ez_laq2">Tôle EZ / acier non calaminé – laq 2 f</option>
-            <option value="limon_plis">Limon avec plis – laq 2 f avec plis</option>
-            <option value="tole_alu_galva_laq1">Tôle alu + galva – laq 1 f</option>
-            <option value="tole_alu_galva_laq2">Tôle alu + galva – laq 2 f</option>
-            <option value="tole_alu_galva_plis">Tôle alu + galva – laq 2 f avec plis</option>
-            <option value="tole_alu_petit">Tôle alu petit format</option>
-            <option value="inox_laq1">Inox / fonte – laq 1 f</option>
-            <option value="inox_laq2">Inox / fonte – laq 2 f</option>
-            <option value="tole_perforee">Tôle perforée acier</option>
-          </optgroup>
-          <optgroup label="Gardes-corps">
-            <option value="gc_barreautes_neuf">GC barreautés – neuf</option>
-            <option value="gc_barreautes_reno">GC barreautés – rénovation</option>
-            <option value="gc_toles_neuf">GC tôles – neuf</option>
-            <option value="gc_toles_reno">GC tôles – rénovation</option>
-            <option value="gc_alu_galva">GC alu galva</option>
-            <option value="gc_galva_forge">GC galva / alu forgé</option>
-            <option value="gc_forge_neuf">GC forgé – neuf</option>
-            <option value="gc_forge_reno">GC forgé – rénovation</option>
-            <option value="gc_mikado">GC mikado</option>
-            <option value="gc_barreautage_neuf">GC barreautage chargé – neuf</option>
-            <option value="gc_barreautage_reno">GC barreautage chargé – rénovation</option>
-          </optgroup>
-        </select>
-
-        <!-- Plaque -->
-        <div id="blocSimple-plaque" class="blocSimple">
-          <div class="row">
-            <div>
-              <label>Longueur (mm)</label>
-              <input type="number" id="plaqueLongueur" placeholder="ex : 1200" />
-            </div>
-            <div>
-              <label>Largeur (mm)</label>
-              <input type="number" id="plaqueLargeur" placeholder="ex : 400" />
-            </div>
-          </div>
-          <label>Faces à peindre</label>
-          <select id="plaqueFaces">
-            <option value="1">1 face</option>
-            <option value="2">2 faces</option>
+        <div>
+          <label>Type de pièce (géométrie)</label>
+          <select id="pieceGeoType">
+            <option value="plaque">Plaque / tôle</option>
+            <option value="tubeRect">Tube carré / rectangulaire</option>
+            <option value="tubeRond">Tube rond</option>
+            <option value="corniereL">Cornière L</option>
+            <option value="profilU">Profil U</option>
+            <option value="plat">Plat</option>
+            <option value="perimetreLibre">Profil spécial (périmètre connu)</option>
+            <option value="limon">Limon complet + supports</option>
           </select>
         </div>
+      </div>
 
-        <!-- Tube rect -->
-        <div id="blocSimple-tubeRect" class="blocSimple" style="display:none;">
-          <div class="row">
-            <div>
-              <label>Largeur (mm)</label>
-              <input type="number" id="tubeRectLargeur" placeholder="ex : 40" />
-            </div>
-            <div>
-              <label>Hauteur (mm)</label>
-              <input type="number" id="tubeRectHauteur" placeholder="ex : 40" />
-            </div>
-          </div>
-          <label>Longueur du tube (mm)</label>
-          <input type="number" id="tubeRectLongueur" placeholder="ex : 2000" />
-          <p class="small">Surface extérieure : 2 × (L + H) × longueur.</p>
+      <label>Type de tarif (grille atelier)</label>
+      <select id="pieceTarifType">
+        <option value="">Tarif libre (thermolaquage)</option>
+        <optgroup label="Tôlerie thermolaquage">
+          <option value="tole_noire_laq2">Tôle noire – laq 2 f</option>
+          <option value="tole_ez_laq1">Tôle EZ – laq 1 f</option>
+          <option value="tole_ez_laq2">Tôle EZ – laq 2 f</option>
+          <option value="limon_plis">Limon avec plis</option>
+          <option value="tole_alu_galva_laq1">Tôle alu/galva – laq 1 f</option>
+          <option value="tole_alu_galva_laq2">Tôle alu/galva – laq 2 f</option>
+          <option value="tole_alu_galva_plis">Tôle alu/galva – plis</option>
+          <option value="tole_alu_petit">Tôle alu &lt; 1 m²</option>
+          <option value="inox_laq1">Inox/fonte – laq 1 f</option>
+          <option value="inox_laq2">Inox/fonte – laq 2 f</option>
+          <option value="tole_perforee">Tôle perforée – laq 2 f</option>
+        </optgroup>
+        <optgroup label="GC thermolaquage">
+          <option value="gc_barreautes_neuf">GC barreautés – neuf</option>
+          <option value="gc_barreautes_reno">GC barreautés – réno</option>
+          <option value="gc_toles_neuf">GC tôles – neuf</option>
+          <option value="gc_toles_reno">GC tôles – réno</option>
+          <option value="gc_alu_galva">GC alu galva</option>
+          <option value="gc_galva_forge">GC galva / alu forgé</option>
+          <option value="gc_forge_neuf">GC forgé – neuf</option>
+          <option value="gc_forge_reno">GC forgé – réno</option>
+          <option value="gc_mikado">GC mikado</option>
+          <option value="gc_barreautage_neuf">GC barreautage chargé – neuf</option>
+          <option value="gc_barreautage_reno">GC barreautage chargé – réno</option>
+        </optgroup>
+        <optgroup label="Sablage seul">
+          <option value="sablage_acier">Sablage acier</option>
+          <option value="sablage_alu">Sablage alu</option>
+          <option value="sablage_inox">Sablage inox</option>
+          <option value="sablage_perfore">Sablage tôle perforée</option>
+          <option value="sablage_premium">Sablage premium grenaille inox</option>
+        </optgroup>
+      </select>
+
+      <div class="row">
+        <div>
+          <label>Mode facturation</label>
+          <select id="modeFacturation">
+            <option value="m2">Au m² (surface) – par défaut</option>
+            <option value="ml">Au ml (longueur)</option>
+          </select>
         </div>
-
-        <!-- Tube rond -->
-        <div id="blocSimple-tubeRond" class="blocSimple" style="display:none;">
-          <label>Diamètre extérieur (mm)</label>
-          <input type="number" id="tubeRondDiametre" placeholder="ex : 60" />
-          <label>Longueur du tube (mm)</label>
-          <input type="number" id="tubeRondLongueur" placeholder="ex : 2000" />
-          <p class="small">Surface extérieure : π × D × longueur.</p>
-        </div>
-
-        <!-- Cornière L -->
-        <div id="blocSimple-corniereL" class="blocSimple" style="display:none;">
-          <div class="row">
-            <div>
-              <label>Aile 1 (mm)</label>
-              <input type="number" id="corniereAile1" placeholder="ex : 40" />
-            </div>
-            <div>
-              <label>Aile 2 (mm)</label>
-              <input type="number" id="corniereAile2" placeholder="ex : 40" />
-            </div>
-          </div>
-          <label>Épaisseur (mm)</label>
-          <input type="number" id="corniereEpaisseur" placeholder="ex : 4" />
-          <label>Longueur (mm)</label>
-          <input type="number" id="corniereLongueur" placeholder="ex : 2000" />
-          <p class="small">
-            Approximatif : développé ≈ (aile1 + aile2 − épaisseur) × 2 (faces) × longueur.
-          </p>
-        </div>
-
-        <!-- Profil U -->
-        <div id="blocSimple-profilU" class="blocSimple" style="display:none;">
-          <div class="row">
-            <div>
-              <label>Largeur semelle (mm)</label>
-              <input type="number" id="uSemelle" placeholder="ex : 80" />
-            </div>
-            <div>
-              <label>Hauteur (mm)</label>
-              <input type="number" id="uHauteur" placeholder="ex : 40" />
-            </div>
-          </div>
-          <label>Épaisseur (mm)</label>
-          <input type="number" id="uEpaisseur" placeholder="ex : 4" />
-          <label>Longueur (mm)</label>
-          <input type="number" id="uLongueur" placeholder="ex : 3000" />
-          <p class="small">
-            Approximatif : développé ≈ (semelle + 2 × hauteur) × 2 (faces) × longueur.
-          </p>
-        </div>
-
-        <!-- Plat -->
-        <div id="blocSimple-plat" class="blocSimple" style="display:none;">
-          <div class="row">
-            <div>
-              <label>Largeur du plat (mm)</label>
-              <input type="number" id="platLargeur" placeholder="ex : 80" />
-            </div>
-            <div>
-              <label>Épaisseur (mm)</label>
-              <input type="number" id="platEpaisseur" placeholder="ex : 8" />
-            </div>
-          </div>
-          <label>Longueur (mm)</label>
-          <input type="number" id="platLongueur" placeholder="ex : 3000" />
-          <p class="small">
-            Surface ≈ 2 faces larges + 2 chants : 2×(largeur×longueur) + 2×(épaisseur×longueur).
-          </p>
-        </div>
-
-        <!-- Périmètre libre -->
-        <div id="blocSimple-perimetreLibre" class="blocSimple" style="display:none;">
-          <label>Périmètre développé extérieur (mm)</label>
-          <input type="number" id="perimLibre" placeholder="ex : 300" />
-          <label>Longueur du profil (mm)</label>
-          <input type="number" id="perimLibreLongueur" placeholder="ex : 2000" />
-          <p class="small">Pour profil spécial : développé × longueur.</p>
-        </div>
-
-        <div class="row">
-          <div>
-            <label>Quantité de pièces</label>
-            <input type="number" id="simpleQuantite" value="1" min="1" />
-          </div>
-        </div>
-
-        <button class="btn-main" id="btnCalcSimple">Calculer surface (forme simple)</button>
-        <button class="btn-main" id="btnAddSimple" style="margin-top:6px;">Ajouter au devis</button>
-
-        <div class="result" id="resultSimple">
-          Renseigne les dimensions puis clique sur <strong>Calculer</strong>.
+        <div>
+          <label>Quantité de pièces</label>
+          <input type="number" id="pieceQuantite" value="1" min="1" />
         </div>
       </div>
 
-      <!-- LIMON -->
-      <div class="tab-content" id="tab-limon" style="display:none;">
-        <div class="section-title">Limon / pièce soudée avec supports</div>
-
+      <!-- GEOMETRIE : FORMES SIMPLES -->
+      <div id="blocGeo-plaque" class="blocGeo">
         <div class="row">
           <div>
-            <label>Nom / référence limon</label>
-            <input type="text" id="limonRef" placeholder="ex : Limon avec plis" />
+            <label>Longueur (mm)</label>
+            <input type="number" id="plaqueLongueur" />
           </div>
           <div>
-            <label>Type de limon (profil principal)</label>
-            <select id="limonType">
-              <option value="tubeRect">Tube carré / rectangulaire</option>
-              <option value="tubeRond">Tube rond</option>
-              <option value="plat">Plat</option>
-              <option value="profilU">Profil U</option>
-              <option value="perimetreLibre">Profil spécial (périmètre connu)</option>
-            </select>
+            <label>Largeur (mm)</label>
+            <input type="number" id="plaqueLargeur" />
           </div>
         </div>
+        <label>Faces à peindre</label>
+        <select id="plaqueFaces">
+          <option value="1">1 face</option>
+          <option value="2">2 faces</option>
+        </select>
+      </div>
 
-        <label>Type de tarif (comme la photo)</label>
-        <select id="limonTarifType">
-          <option value="">Tarif libre (champ en haut)</option>
-          <option value="limon_plis" selected>Limon avec plis – laq 2 f avec plis</option>
-          <optgroup label="Gardes-corps">
-            <option value="gc_barreautes_neuf">GC barreautés – neuf</option>
-            <option value="gc_barreautes_reno">GC barreautés – rénovation</option>
-            <option value="gc_toles_neuf">GC tôles – neuf</option>
-            <option value="gc_toles_reno">GC tôles – rénovation</option>
-            <option value="gc_alu_galva">GC alu galva</option>
-            <option value="gc_galva_forge">GC galva / alu forgé</option>
-            <option value="gc_forge_neuf">GC forgé – neuf</option>
-            <option value="gc_forge_reno">GC forgé – rénovation</option>
-            <option value="gc_mikado">GC mikado</option>
-            <option value="gc_barreautage_neuf">GC barreautage chargé – neuf</option>
-            <option value="gc_barreautage_reno">GC barreautage chargé – rénovation</option>
-          </optgroup>
+      <div id="blocGeo-tubeRect" class="blocGeo" style="display:none;">
+        <div class="row">
+          <div>
+            <label>Largeur (mm)</label>
+            <input type="number" id="tubeRectLargeur" />
+          </div>
+          <div>
+            <label>Hauteur (mm)</label>
+            <input type="number" id="tubeRectHauteur" />
+          </div>
+        </div>
+        <label>Longueur (mm)</label>
+        <input type="number" id="tubeRectLongueur" />
+      </div>
+
+      <div id="blocGeo-tubeRond" class="blocGeo" style="display:none;">
+        <label>Diamètre extérieur (mm)</label>
+        <input type="number" id="tubeRondDiametre" />
+        <label>Longueur (mm)</label>
+        <input type="number" id="tubeRondLongueur" />
+      </div>
+
+      <div id="blocGeo-corniereL" class="blocGeo" style="display:none;">
+        <div class="row">
+          <div>
+            <label>Aile 1 (mm)</label>
+            <input type="number" id="corniereAile1" />
+          </div>
+          <div>
+            <label>Aile 2 (mm)</label>
+            <input type="number" id="corniereAile2" />
+          </div>
+        </div>
+        <label>Épaisseur (mm)</label>
+        <input type="number" id="corniereEpaisseur" />
+        <label>Longueur (mm)</label>
+        <input type="number" id="corniereLongueur" />
+      </div>
+
+      <div id="blocGeo-profilU" class="blocGeo" style="display:none;">
+        <div class="row">
+          <div>
+            <label>Largeur semelle (mm)</label>
+            <input type="number" id="uSemelle" />
+          </div>
+          <div>
+            <label>Hauteur (mm)</label>
+            <input type="number" id="uHauteur" />
+          </div>
+        </div>
+        <label>Épaisseur (mm)</label>
+        <input type="number" id="uEpaisseur" />
+        <label>Longueur (mm)</label>
+        <input type="number" id="uLongueur" />
+      </div>
+
+      <div id="blocGeo-plat" class="blocGeo" style="display:none;">
+        <div class="row">
+          <div>
+            <label>Largeur (mm)</label>
+            <input type="number" id="platLargeur" />
+          </div>
+          <div>
+            <label>Épaisseur (mm)</label>
+            <input type="number" id="platEpaisseur" />
+          </div>
+        </div>
+        <label>Longueur (mm)</label>
+        <input type="number" id="platLongueur" />
+      </div>
+
+      <div id="blocGeo-perimetreLibre" class="blocGeo" style="display:none;">
+        <label>Périmètre développé (mm)</label>
+        <input type="number" id="perimLibre" />
+        <label>Longueur (mm)</label>
+        <input type="number" id="perimLibreLongueur" />
+      </div>
+
+      <!-- LIMON + SUPPORTS -->
+      <div id="blocGeo-limon" class="blocGeo" style="display:none; margin-top:6px;">
+        <div class="section-title">Profil limon</div>
+        <label>Type de profil limon</label>
+        <select id="limonProfilType">
+          <option value="tubeRect">Tube rectangulaire</option>
+          <option value="tubeRond">Tube rond</option>
+          <option value="plat">Plat</option>
+          <option value="profilU">Profil U</option>
+          <option value="perimetreLibre">Profil spécial (périmètre connu)</option>
         </select>
 
-        <!-- Profils limon -->
-        <div id="blocLimon-tubeRect" class="blocLimon">
+        <div id="blocLimon-tubeRect">
           <div class="row">
             <div>
               <label>Largeur tube (mm)</label>
-              <input type="number" id="limonTubeRectLargeur" placeholder="ex : 120" />
+              <input type="number" id="limonTubeRectLargeur" />
             </div>
             <div>
               <label>Hauteur tube (mm)</label>
-              <input type="number" id="limonTubeRectHauteur" placeholder="ex : 60" />
+              <input type="number" id="limonTubeRectHauteur" />
             </div>
           </div>
         </div>
 
-        <div id="blocLimon-tubeRond" class="blocLimon" style="display:none;">
+        <div id="blocLimon-tubeRond" style="display:none;">
           <label>Diamètre tube (mm)</label>
-          <input type="number" id="limonTubeRondDiametre" placeholder="ex : 80" />
+          <input type="number" id="limonTubeRondDiametre" />
         </div>
 
-        <div id="blocLimon-plat" class="blocLimon" style="display:none;">
+        <div id="blocLimon-plat" style="display:none;">
           <div class="row">
             <div>
               <label>Largeur plat (mm)</label>
-              <input type="number" id="limonPlatLargeur" placeholder="ex : 200" />
+              <input type="number" id="limonPlatLargeur" />
             </div>
             <div>
               <label>Épaisseur (mm)</label>
-              <input type="number" id="limonPlatEpaisseur" placeholder="ex : 10" />
+              <input type="number" id="limonPlatEpaisseur" />
             </div>
           </div>
         </div>
 
-        <div id="blocLimon-profilU" class="blocLimon" style="display:none;">
+        <div id="blocLimon-profilU" style="display:none;">
           <div class="row">
             <div>
               <label>Largeur semelle U (mm)</label>
-              <input type="number" id="limonUSemelle" placeholder="ex : 200" />
+              <input type="number" id="limonUSemelle" />
             </div>
             <div>
               <label>Hauteur U (mm)</label>
-              <input type="number" id="limonUHauteur" placeholder="ex : 80" />
+              <input type="number" id="limonUHauteur" />
             </div>
           </div>
           <label>Épaisseur (mm)</label>
-          <input type="number" id="limonUEpaisseur" placeholder="ex : 8" />
+          <input type="number" id="limonUEpaisseur" />
         </div>
 
-        <div id="blocLimon-perimetreLibre" class="blocLimon" style="display:none;">
-          <label>Périmètre développé du profil (mm)</label>
-          <input type="number" id="limonPerimLibre" placeholder="ex : 450" />
+        <div id="blocLimon-perimetreLibre" style="display:none;">
+          <label>Périmètre développé limon (mm)</label>
+          <input type="number" id="limonPerimLibre" />
         </div>
 
-        <label>Longueur du limon / pièce (mm)</label>
-        <input type="number" id="limonLongueur" placeholder="ex : 4000" />
+        <label>Longueur limon (mm)</label>
+        <input type="number" id="limonLongueur" />
 
-        <!-- Supports -->
-        <div style="margin-top:8px;">
-          <div class="section-title">
-            Supports de marche
-            <span class="badge">Optionnel</span>
-          </div>
-
-          <p class="small">
-            Approximatif : support en “L” (vertical + horizontal) en plat.
-          </p>
-
+        <!-- SUPPORTS -->
+        <div style="margin-top:10px;">
+          <div class="section-title">Supports de marche (pièces soudées)</div>
+          <p class="small">Approximatif : support = 2 plats (vertical + horizontal).</p>
           <div class="row">
             <div>
               <label>Largeur support (mm)</label>
-              <input type="number" id="supportLargeur" placeholder="ex : 200" />
+              <input type="number" id="supportLargeur" />
             </div>
             <div>
               <label>Hauteur verticale (mm)</label>
-              <input type="number" id="supportHauteur" placeholder="ex : 150" />
+              <input type="number" id="supportHauteur" />
             </div>
           </div>
-
           <div class="row">
             <div>
               <label>Longueur horizontale (mm)</label>
-              <input type="number" id="supportLongueur" placeholder="ex : 250" />
+              <input type="number" id="supportLongueur" />
             </div>
             <div>
               <label>Épaisseur plat (mm)</label>
-              <input type="number" id="supportEpaisseur" placeholder="ex : 8" />
+              <input type="number" id="supportEpaisseur" />
             </div>
           </div>
-
           <div class="row">
             <div>
-              <label>Nombre de marches / supports</label>
+              <label>Nombre de supports / marches</label>
               <input type="number" id="supportNb" value="0" />
-            </div>
-            <div>
-              <label>Quantité de limons identiques</label>
-              <input type="number" id="limonQuantite" value="1" min="1" />
             </div>
           </div>
         </div>
+      </div>
 
-        <button class="btn-main" id="btnCalcLimon">Calculer surface (limon + supports)</button>
-        <button class="btn-main" id="btnAddLimon" style="margin-top:6px;">Ajouter au devis</button>
+      <button class="btn-full" id="btnCalcPiece">Calculer surface / longueur</button>
+      <button class="btn-full" id="btnAddDevis" style="margin-top:6px;">Ajouter au devis</button>
 
-        <div class="result" id="resultLimon">
-          Renseigne les cotes du limon (et des supports si besoin), puis clique sur <strong>Calculer</strong>.
-        </div>
+      <div class="result" id="resultPiece">
+        Renseigne les cotes, choisis le tarif, puis clique sur <strong>Calculer</strong>.
       </div>
     </section>
 
-    <!-- RECAP -->
+    <!-- RECAP DEVIS -->
     <section class="card">
       <div class="section-title">Récap devis – GC Epox-Design</div>
-      <p class="small">
-        Chaque clic sur <strong>“Ajouter au devis”</strong> ajoute une ligne ci-dessous.
-      </p>
+      <p class="small">Chaque clic sur “Ajouter au devis” ajoute une ligne ci-dessous.</p>
 
-      <div class="card-soft" style="max-height: 260px; overflow:auto; margin-bottom:6px;">
+      <div style="max-height: 260px; overflow:auto; border-radius:12px; border:1px solid rgba(68,72,125,0.9); margin-bottom:6px;">
         <table id="tableDevis">
           <thead>
           <tr>
             <th>#</th>
             <th>Référence</th>
-            <th>Type</th>
+            <th>Tarif</th>
             <th class="text-right">Qté</th>
             <th class="text-right">Surf/pièce (m²)</th>
-            <th class="text-right">Surf totale (m²)</th>
+            <th class="text-right">Longueur/pièce (m)</th>
+            <th class="text-right">Total m²</th>
+            <th class="text-right">Total ml</th>
             <th class="text-right">Prix (€)</th>
             <th class="text-right">Poudre (kg)</th>
           </tr>
@@ -820,355 +809,359 @@
         Aucun élément pour l’instant.
       </div>
 
-      <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn-secondary btn-danger" id="btnResetDevis">Vider le devis</button>
-      </div>
+      <button class="btn-secondary btn-full btn-danger" id="btnResetDevis" style="margin-top:8px;">Vider le devis</button>
     </section>
-
-    <footer class="footer">
-      <div>© GC Epox-Design – Outil interne de calcul de surfaces pour sablage & thermolaquage.</div>
-      <div>Atelier : 38 route de la Pépinière, 67160 Wissembourg – Tél. 07.83.99.27.94</div>
-    </footer>
   </div>
 
   <script>
-    function parseNumber(value) {
-      if (!value && value !== 0) return 0;
-      return parseFloat(String(value).replace(",", ".")) || 0;
+    // ===== UTILITAIRES =====
+    function parseNumber(v) {
+      if (!v && v !== 0) return 0;
+      return parseFloat(String(v).replace(",", ".")) || 0;
     }
     function mmToM(mm) { return mm / 1000; }
 
-    // mapping tarif -> id input
-    const TARIF_INPUT_IDS = {
-      tole_noire_laq2: "tarif_tole_noire_laq2",
-      tole_ez_laq1: "tarif_tole_ez_laq1",
-      tole_ez_laq2: "tarif_tole_ez_laq2",
-      limon_plis: "tarif_limon_plis",
-      tole_alu_galva_laq1: "tarif_tole_alu_galva_laq1",
-      tole_alu_galva_laq2: "tarif_tole_alu_galva_laq2",
-      tole_alu_galva_plis: "tarif_tole_alu_galva_plis",
-      tole_alu_petit: "tarif_tole_alu_petit",
-      inox_laq1: "tarif_inox_laq1",
-      inox_laq2: "tarif_inox_laq2",
-      tole_perforee: "tarif_tole_perforee",
-      gc_barreautes_neuf: "tarif_gc_barreautes_neuf",
-      gc_barreautes_reno: "tarif_gc_barreautes_reno",
-      gc_toles_neuf: "tarif_gc_toles_neuf",
-      gc_toles_reno: "tarif_gc_toles_reno",
-      gc_alu_galva: "tarif_gc_alu_galva",
-      gc_galva_forge: "tarif_gc_galva_forge",
-      gc_forge_neuf: "tarif_gc_forge_neuf",
-      gc_forge_reno: "tarif_gc_forge_reno",
-      gc_mikado: "tarif_gc_mikado",
-      gc_barreautage_neuf: "tarif_gc_barreautage_neuf",
-      gc_barreautage_reno: "tarif_gc_barreautage_reno",
-    };
-
-    function getTarifFromKey(key) {
-      if (!key) return 0;
-      const id = TARIF_INPUT_IDS[key];
-      if (!id) return 0;
-      const el = document.getElementById(id);
-      if (!el) return 0;
-      return parseNumber(el.value);
-    }
-
-    // Onglets
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const tabContents = document.querySelectorAll(".tab-content");
-    tabButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const tab = btn.dataset.tab;
-        tabButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        tabContents.forEach(c => c.style.display = c.id === "tab-" + tab ? "block" : "none");
-      });
+    // ===== ACCORDION PARAMS =====
+    const paramsToggle = document.getElementById("paramsToggle");
+    const paramsBody = document.getElementById("paramsBody");
+    const paramsChevron = document.getElementById("paramsChevron");
+    paramsToggle.addEventListener("click", () => {
+      const visible = paramsBody.style.display === "block";
+      paramsBody.style.display = visible ? "none" : "block";
+      paramsChevron.textContent = visible ? "▼" : "▲";
     });
 
-    // Formes simples
-    const simpleTypeSelect = document.getElementById("simpleType");
-    const blocSimpleList = document.querySelectorAll(".blocSimple");
-    const resultSimple = document.getElementById("resultSimple");
-    function showSimpleBloc() {
-      const val = simpleTypeSelect.value;
-      blocSimpleList.forEach(b => b.style.display = "none");
-      const bloc = document.getElementById("blocSimple-" + val);
-      if (bloc) bloc.style.display = "block";
+    // ===== GEOMETRIE VISIBILITY =====
+    const pieceGeoType = document.getElementById("pieceGeoType");
+    const geoBlocks = document.querySelectorAll(".blocGeo");
+    function showGeoBlock() {
+      const val = pieceGeoType.value;
+      geoBlocks.forEach(b => b.style.display = "none");
+      const block = document.getElementById("blocGeo-" + val);
+      if (block) block.style.display = "block";
     }
-    simpleTypeSelect.addEventListener("change", showSimpleBloc);
-    showSimpleBloc();
+    pieceGeoType.addEventListener("change", showGeoBlock);
+    showGeoBlock();
 
-    function calcSimplePiece() {
-      const type = simpleTypeSelect.value;
-      const quantite = parseNumber(document.getElementById("simpleQuantite").value) || 1;
-      const ref = document.getElementById("simpleRef").value.trim();
-      const tarifSelect = document.getElementById("simpleTarifType");
-      const tarifKey = tarifSelect.value;
-      const tarifLabel = tarifSelect.options[tarifSelect.selectedIndex].text;
+    // LIMON PROFIL BLOCKS
+    const limonProfilType = document.getElementById("limonProfilType");
+    const limonBlocks = {
+      tubeRect: document.getElementById("blocLimon-tubeRect"),
+      tubeRond: document.getElementById("blocLimon-tubeRond"),
+      plat: document.getElementById("blocLimon-plat"),
+      profilU: document.getElementById("blocLimon-profilU"),
+      perimetreLibre: document.getElementById("blocLimon-perimetreLibre"),
+    };
+    function showLimonProfilBlock() {
+      const t = limonProfilType.value;
+      Object.keys(limonBlocks).forEach(k => limonBlocks[k].style.display = "none");
+      if (limonBlocks[t]) limonBlocks[t].style.display = "block";
+    }
+    limonProfilType.addEventListener("change", showLimonProfilBlock);
+    showLimonProfilBlock();
 
-      let surfaceParPiece_m2 = 0;
+    // ===== TARIFS MAPPING =====
+    const TARIF_IDS_M2 = {
+      tole_noire_laq2: "tarif_tole_noire_laq2_m2",
+      tole_ez_laq1: "tarif_tole_ez_laq1_m2",
+      tole_ez_laq2: "tarif_tole_ez_laq2_m2",
+      limon_plis: "tarif_limon_plis_m2",
+      tole_alu_galva_laq1: "tarif_tole_alu_galva_laq1_m2",
+      tole_alu_galva_laq2: "tarif_tole_alu_galva_laq2_m2",
+      tole_alu_galva_plis: "tarif_tole_alu_galva_plis_m2",
+      tole_alu_petit: "tarif_tole_alu_petit_m2",
+      inox_laq1: "tarif_inox_laq1_m2",
+      inox_laq2: "tarif_inox_laq2_m2",
+      tole_perforee: "tarif_tole_perforee_m2",
+      gc_barreautes_neuf: "tarif_gc_barreautes_neuf_m2",
+      gc_barreautes_reno: "tarif_gc_barreautes_reno_m2",
+      gc_toles_neuf: "tarif_gc_toles_neuf_m2",
+      gc_toles_reno: "tarif_gc_toles_reno_m2",
+      gc_alu_galva: "tarif_gc_alu_galva_m2",
+      gc_galva_forge: "tarif_gc_galva_forge_m2",
+      gc_forge_neuf: "tarif_gc_forge_neuf_m2",
+      gc_forge_reno: "tarif_gc_forge_reno_m2",
+      gc_mikado: "tarif_gc_mikado_m2",
+      gc_barreautage_neuf: "tarif_gc_barreautage_neuf_m2",
+      gc_barreautage_reno: "tarif_gc_barreautage_reno_m2",
+      sablage_acier: "tarif_sablage_acier_m2",
+      sablage_alu: "tarif_sablage_alu_m2",
+      sablage_inox: "tarif_sablage_inox_m2",
+      sablage_perfore: "tarif_sablage_perfore_m2",
+      sablage_premium: "tarif_sablage_premium_m2",
+    };
+    const TARIF_IDS_ML = {
+      tole_noire_laq2: "tarif_tole_noire_laq2_ml",
+      tole_ez_laq1: "tarif_tole_ez_laq1_ml",
+      tole_ez_laq2: "tarif_tole_ez_laq2_ml",
+      limon_plis: "tarif_limon_plis_ml",
+      tole_alu_galva_laq1: "tarif_tole_alu_galva_laq1_ml",
+      tole_alu_galva_laq2: "tarif_tole_alu_galva_laq2_ml",
+      tole_alu_galva_plis: "tarif_tole_alu_galva_plis_ml",
+      tole_alu_petit: "tarif_tole_alu_petit_ml",
+      inox_laq1: "tarif_inox_laq1_ml",
+      inox_laq2: "tarif_inox_laq2_ml",
+      tole_perforee: "tarif_tole_perforee_ml",
+      gc_barreautes_neuf: "tarif_gc_barreautes_neuf_ml",
+      gc_barreautes_reno: "tarif_gc_barreautes_reno_ml",
+      gc_toles_neuf: "tarif_gc_toles_neuf_ml",
+      gc_toles_reno: "tarif_gc_toles_reno_ml",
+      gc_alu_galva: "tarif_gc_alu_galva_ml",
+      gc_galva_forge: "tarif_gc_galva_forge_ml",
+      gc_forge_neuf: "tarif_gc_forge_neuf_ml",
+      gc_forge_reno: "tarif_gc_forge_reno_ml",
+      gc_mikado: "tarif_gc_mikado_ml",
+      gc_barreautage_neuf: "tarif_gc_barreautage_neuf_ml",
+      gc_barreautage_reno: "tarif_gc_barreautage_reno_ml",
+      sablage_acier: "tarif_sablage_acier_ml",
+      sablage_alu: "tarif_sablage_alu_ml",
+      sablage_inox: "tarif_sablage_inox_ml",
+      sablage_perfore: "tarif_sablage_perfore_ml",
+      sablage_premium: "tarif_sablage_premium_ml",
+    };
+
+    function getTarifM2(key) {
+      if (!key) return parseNumber(document.getElementById("prixM2Libre").value);
+      const id = TARIF_IDS_M2[key];
+      if (!id) return 0;
+      return parseNumber(document.getElementById(id).value);
+    }
+    function getTarifML(key) {
+      if (!key) return parseNumber(document.getElementById("prixMLLibre").value);
+      const id = TARIF_IDS_ML[key];
+      if (!id) return 0;
+      return parseNumber(document.getElementById(id).value);
+    }
+
+    // ===== CALCUL PIECE =====
+    const resultPiece = document.getElementById("resultPiece");
+    const modeFacturationSelect = document.getElementById("modeFacturation");
+    const pieceTarifType = document.getElementById("pieceTarifType");
+
+    function calcPiece() {
+      const geoType = pieceGeoType.value;
+      const qte = parseNumber(document.getElementById("pieceQuantite").value) || 1;
+      const ref = document.getElementById("pieceRef").value.trim();
+      const modeFacturation = modeFacturationSelect.value;
+      const tarifKey = pieceTarifType.value;
+      const tarifLabel = tarifKey
+        ? pieceTarifType.options[pieceTarifType.selectedIndex].text
+        : "Tarif libre";
+
+      let surfParPiece_m2 = 0;
+      let longueurParPiece_m = 0;
       let details = "";
 
-      if (type === "plaque") {
+      // FORMES SIMPLES
+      if (geoType === "plaque") {
         const L = mmToM(parseNumber(document.getElementById("plaqueLongueur").value));
         const l = mmToM(parseNumber(document.getElementById("plaqueLargeur").value));
         const faces = parseInt(document.getElementById("plaqueFaces").value, 10) || 1;
-        surfaceParPiece_m2 = L * l * faces;
+        surfParPiece_m2 = L * l * faces;
+        longueurParPiece_m = L; // pour ML : on prend longueur principale
         details = `Plaque ${faces} face(s) – L=${L.toFixed(3)} m, l=${l.toFixed(3)} m.`;
       }
-      if (type === "tubeRect") {
+      if (geoType === "tubeRect") {
         const larg = mmToM(parseNumber(document.getElementById("tubeRectLargeur").value));
         const haut = mmToM(parseNumber(document.getElementById("tubeRectHauteur").value));
         const long = mmToM(parseNumber(document.getElementById("tubeRectLongueur").value));
         const perim = 2 * (larg + haut);
-        surfaceParPiece_m2 = perim * long;
+        surfParPiece_m2 = perim * long;
+        longueurParPiece_m = long;
         details = `Tube rect : ${larg.toFixed(3)}×${haut.toFixed(3)} m, L=${long.toFixed(3)} m.`;
       }
-      if (type === "tubeRond") {
+      if (geoType === "tubeRond") {
         const d = mmToM(parseNumber(document.getElementById("tubeRondDiametre").value));
         const L = mmToM(parseNumber(document.getElementById("tubeRondLongueur").value));
-        surfaceParPiece_m2 = Math.PI * d * L;
+        surfParPiece_m2 = Math.PI * d * L;
+        longueurParPiece_m = L;
         details = `Tube rond D=${d.toFixed(3)} m, L=${L.toFixed(3)} m.`;
       }
-      if (type === "corniereL") {
+      if (geoType === "corniereL") {
         const a1 = mmToM(parseNumber(document.getElementById("corniereAile1").value));
         const a2 = mmToM(parseNumber(document.getElementById("corniereAile2").value));
         const e = mmToM(parseNumber(document.getElementById("corniereEpaisseur").value));
         const L = mmToM(parseNumber(document.getElementById("corniereLongueur").value));
-        const dev_approx = (a1 + a2 - e) * 2;
-        surfaceParPiece_m2 = dev_approx * L;
-        details = `Cornière L ~ ailes ${a1.toFixed(3)} / ${a2.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L.toFixed(3)} m.`;
+        const dev = (a1 + a2 - e) * 2;
+        surfParPiece_m2 = dev * L;
+        longueurParPiece_m = L;
+        details = `Cornière L ~ ${a1.toFixed(3)} / ${a2.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L.toFixed(3)} m.`;
       }
-      if (type === "profilU") {
+      if (geoType === "profilU") {
         const sem = mmToM(parseNumber(document.getElementById("uSemelle").value));
         const h = mmToM(parseNumber(document.getElementById("uHauteur").value));
         const e = mmToM(parseNumber(document.getElementById("uEpaisseur").value));
         const L = mmToM(parseNumber(document.getElementById("uLongueur").value));
         const contour = sem + 2 * h;
-        const dev_approx = contour * 2;
-        surfaceParPiece_m2 = dev_approx * L;
-        details = `Profil U ~ semelle=${sem.toFixed(3)} m, h=${h.toFixed(3)} m, L=${L.toFixed(3)} m.`;
+        const dev = contour * 2;
+        surfParPiece_m2 = dev * L;
+        longueurParPiece_m = L;
+        details = `Profil U ~ semelle=${sem.toFixed(3)} m, h=${h.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L.toFixed(3)} m.`;
       }
-      if (type === "plat") {
+      if (geoType === "plat") {
         const larg = mmToM(parseNumber(document.getElementById("platLargeur").value));
         const e = mmToM(parseNumber(document.getElementById("platEpaisseur").value));
         const L = mmToM(parseNumber(document.getElementById("platLongueur").value));
-        const surfFaces = 2 * (larg * L);
-        const surfChants = 2 * (e * L);
-        surfaceParPiece_m2 = surfFaces + surfChants;
+        const faces = 2 * (larg * L);
+        const chants = 2 * (e * L);
+        surfParPiece_m2 = faces + chants;
+        longueurParPiece_m = L;
         details = `Plat larg=${larg.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L.toFixed(3)} m.`;
       }
-      if (type === "perimetreLibre") {
+      if (geoType === "perimetreLibre") {
         const perim = mmToM(parseNumber(document.getElementById("perimLibre").value));
         const L = mmToM(parseNumber(document.getElementById("perimLibreLongueur").value));
-        surfaceParPiece_m2 = perim * L;
+        surfParPiece_m2 = perim * L;
+        longueurParPiece_m = L;
         details = `Profil spécial périmètre=${perim.toFixed(3)} m, L=${L.toFixed(3)} m.`;
       }
 
-      if (!surfaceParPiece_m2 || surfaceParPiece_m2 <= 0) {
-        resultSimple.innerHTML = "⚠️ Vérifie les dimensions, impossible de calculer la surface.";
+      // LIMON + SUPPORTS
+      if (geoType === "limon") {
+        const L_mm = parseNumber(document.getElementById("limonLongueur").value);
+        const L_m = mmToM(L_mm);
+        const profilType = limonProfilType.value;
+
+        let surfLimon_m2 = 0;
+        if (profilType === "tubeRect") {
+          const larg = mmToM(parseNumber(document.getElementById("limonTubeRectLargeur").value));
+          const haut = mmToM(parseNumber(document.getElementById("limonTubeRectHauteur").value));
+          const perim = 2 * (larg + haut);
+          surfLimon_m2 = perim * L_m;
+          details = `Limon tube rect ~ ${larg.toFixed(3)}×${haut.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
+        } else if (profilType === "tubeRond") {
+          const d = mmToM(parseNumber(document.getElementById("limonTubeRondDiametre").value));
+          surfLimon_m2 = Math.PI * d * L_m;
+          details = `Limon tube rond D=${d.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
+        } else if (profilType === "plat") {
+          const larg = mmToM(parseNumber(document.getElementById("limonPlatLargeur").value));
+          const e = mmToM(parseNumber(document.getElementById("limonPlatEpaisseur").value));
+          const faces = 2 * (larg * L_m);
+          const chants = 2 * (e * L_m);
+          surfLimon_m2 = faces + chants;
+          details = `Limon plat larg=${larg.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
+        } else if (profilType === "profilU") {
+          const sem = mmToM(parseNumber(document.getElementById("limonUSemelle").value));
+          const h = mmToM(parseNumber(document.getElementById("limonUHauteur").value));
+          const e = mmToM(parseNumber(document.getElementById("limonUEpaisseur").value));
+          const contour = sem + 2 * h;
+          const dev = contour * 2;
+          surfLimon_m2 = dev * L_m;
+          details = `Limon U ~ semelle=${sem.toFixed(3)} m, h=${h.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
+        } else if (profilType === "perimetreLibre") {
+          const perim = mmToM(parseNumber(document.getElementById("limonPerimLibre").value));
+          surfLimon_m2 = perim * L_m;
+          details = `Limon profil spécial périmètre=${perim.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
+        }
+
+        // Supports
+        const supportLargeur_m = mmToM(parseNumber(document.getElementById("supportLargeur").value));
+        const supportHauteur_m = mmToM(parseNumber(document.getElementById("supportHauteur").value));
+        const supportLongueur_m = mmToM(parseNumber(document.getElementById("supportLongueur").value));
+        const supportEpaisseur_m = mmToM(parseNumber(document.getElementById("supportEpaisseur").value));
+        const supportNb = parseNumber(document.getElementById("supportNb").value) || 0;
+
+        let surfUnSupport_m2 = 0;
+        if (supportNb > 0 && supportLargeur_m > 0 && (supportHauteur_m > 0 || supportLongueur_m > 0)) {
+          const surfVertFaces = 2 * (supportLargeur_m * supportHauteur_m);
+          const surfHorizFaces = 2 * (supportLargeur_m * supportLongueur_m);
+          const surfVertChants = 2 * (supportEpaisseur_m * supportHauteur_m);
+          const surfHorizChants = 2 * (supportEpaisseur_m * supportLongueur_m);
+          surfUnSupport_m2 = surfVertFaces + surfHorizFaces + surfVertChants + surfHorizChants;
+          details += `<br>Supports : larg=${supportLargeur_m.toFixed(3)} m, h=${supportHauteur_m.toFixed(3)} m, L=${supportLongueur_m.toFixed(3)} m.`;
+        }
+
+        const surfSupportsTot_m2 = surfUnSupport_m2 * supportNb;
+        surfParPiece_m2 = surfLimon_m2 + surfSupportsTot_m2;
+        longueurParPiece_m = L_m;
+
+        details += `<br>Surface limon : ${surfLimon_m2.toFixed(3)} m²`;
+        if (supportNb > 0 && surfUnSupport_m2 > 0) {
+          details += `<br>Surface supports : ${surfSupportsTot_m2.toFixed(3)} m² (${supportNb} pcs)`;
+        }
+      }
+
+      if (surfParPiece_m2 <= 0 || qte <= 0) {
+        resultPiece.innerHTML = "⚠️ Vérifie les dimensions et la quantité.";
         return null;
       }
 
-      const total_m2 = surfaceParPiece_m2 * quantite;
+      const totalSurf_m2 = surfParPiece_m2 * qte;
+      const totalLong_m = longueurParPiece_m * qte;
+
+      const poudreM2 = parseNumber(document.getElementById("poudreM2").value);
+      const poudreTotal = poudreM2 > 0 ? totalSurf_m2 * poudreM2 : 0;
+
+      const tarifM2 = getTarifM2(tarifKey);
+      const tarifML = getTarifML(tarifKey);
+      let prix = 0;
+      if (modeFacturation === "m2") {
+        prix = tarifM2 > 0 ? totalSurf_m2 * tarifM2 : 0;
+      } else {
+        prix = tarifML > 0 ? totalLong_m * tarifML : 0;
+      }
+
       const refLine = ref ? `Pièce : <strong>${ref}</strong><br>` : "";
 
-      resultSimple.innerHTML = `
+      resultPiece.innerHTML = `
         ${refLine}
-        ${details}<br>
-        Tarif : <em>${tarifKey ? tarifLabel : "tarif libre"}</em><br><br>
-        Surface par pièce : <strong>${surfaceParPiece_m2.toFixed(3)} m²</strong><br>
-        Quantité : <strong>${quantite}</strong><br>
-        Surface totale : <strong>${total_m2.toFixed(3)} m²</strong>
+        Géométrie : <em>${geoType}</em> – Tarif : <em>${tarifLabel}</em><br>
+        Mode facturation : <strong>${modeFacturation === "m2" ? "m²" : "ml"}</strong><br><br>
+        ${details}<br><br>
+        Surface / pièce : <strong>${surfParPiece_m2.toFixed(3)} m²</strong><br>
+        Longueur / pièce : <strong>${longueurParPiece_m.toFixed(3)} m</strong><br>
+        Quantité : <strong>${qte}</strong><br>
+        Surface totale : <strong>${totalSurf_m2.toFixed(3)} m²</strong><br>
+        Longueur totale : <strong>${totalLong_m.toFixed(3)} m</strong><br>
+        Prix estimatif : <strong>${prix.toFixed(2)} €</strong><br>
+        Poudre estimée : <strong>${poudreTotal.toFixed(2)} kg</strong>
       `;
 
-      return { type, ref, qte: quantite, surfaceParPiece_m2, surfaceTotale_m2: total_m2, tarifKey, tarifLabel };
-    }
-
-    document.getElementById("btnCalcSimple").addEventListener("click", calcSimplePiece);
-
-    // Limon
-    const limonTypeSelect = document.getElementById("limonType");
-    const blocLimonList = document.querySelectorAll(".blocLimon");
-    const resultLimon = document.getElementById("resultLimon");
-    function showLimonBloc() {
-      const val = limonTypeSelect.value;
-      blocLimonList.forEach(b => b.style.display = "none");
-      const bloc = document.getElementById("blocLimon-" + val);
-      if (bloc) bloc.style.display = "block";
-    }
-    limonTypeSelect.addEventListener("change", showLimonBloc);
-    showLimonBloc();
-
-    function calcLimonPiece() {
-      const type = limonTypeSelect.value;
-      const L_mm = parseNumber(document.getElementById("limonLongueur").value);
-      const L_m = mmToM(L_mm);
-      const nbLimon = parseNumber(document.getElementById("limonQuantite").value) || 1;
-      const ref = document.getElementById("limonRef").value.trim();
-      const tarifSelect = document.getElementById("limonTarifType");
-      const tarifKey = tarifSelect.value;
-      const tarifLabel = tarifSelect.options[tarifSelect.selectedIndex].text;
-
-      if (L_m <= 0) {
-        resultLimon.innerHTML = "⚠️ Indique la longueur du limon / profil (mm).";
-        return null;
-      }
-
-      let surfLimon_m2 = 0;
-      let descLimon = "";
-
-      if (type === "tubeRect") {
-        const larg = mmToM(parseNumber(document.getElementById("limonTubeRectLargeur").value));
-        const haut = mmToM(parseNumber(document.getElementById("limonTubeRectHauteur").value));
-        const perim = 2 * (larg + haut);
-        surfLimon_m2 = perim * L_m;
-        descLimon = `Limon tube rect ~ ${larg.toFixed(3)}×${haut.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
-      }
-      if (type === "tubeRond") {
-        const d = mmToM(parseNumber(document.getElementById("limonTubeRondDiametre").value));
-        surfLimon_m2 = Math.PI * d * L_m;
-        descLimon = `Limon tube rond D=${d.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
-      }
-      if (type === "plat") {
-        const larg = mmToM(parseNumber(document.getElementById("limonPlatLargeur").value));
-        const e = mmToM(parseNumber(document.getElementById("limonPlatEpaisseur").value));
-        const surfFaces = 2 * (larg * L_m);
-        const surfChants = 2 * (e * L_m);
-        surfLimon_m2 = surfFaces + surfChants;
-        descLimon = `Limon plat larg=${larg.toFixed(3)} m, ép=${e.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
-      }
-      if (type === "profilU") {
-        const sem = mmToM(parseNumber(document.getElementById("limonUSemelle").value));
-        const h = mmToM(parseNumber(document.getElementById("limonUHauteur").value));
-        const e = mmToM(parseNumber(document.getElementById("limonUEpaisseur").value));
-        const contour = sem + 2 * h;
-        const dev_approx = contour * 2;
-        surfLimon_m2 = dev_approx * L_m;
-        descLimon = `Limon U ~ semelle=${sem.toFixed(3)} m, h=${h.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
-      }
-      if (type === "perimetreLibre") {
-        const perim = mmToM(parseNumber(document.getElementById("limonPerimLibre").value));
-        surfLimon_m2 = perim * L_m;
-        descLimon = `Limon profil spécial périmètre=${perim.toFixed(3)} m, L=${L_m.toFixed(3)} m.`;
-      }
-
-      if (!surfLimon_m2 || surfLimon_m2 <= 0) {
-        resultLimon.innerHTML = "⚠️ Vérifie les dimensions du limon (profil).";
-        return null;
-      }
-
-      const supportLargeur_m = mmToM(parseNumber(document.getElementById("supportLargeur").value));
-      const supportHauteur_m = mmToM(parseNumber(document.getElementById("supportHauteur").value));
-      const supportLongueur_m = mmToM(parseNumber(document.getElementById("supportLongueur").value));
-      const supportEpaisseur_m = mmToM(parseNumber(document.getElementById("supportEpaisseur").value));
-      const supportNb = parseNumber(document.getElementById("supportNb").value) || 0;
-
-      let surfUnSupport_m2 = 0;
-      let descSupport = "";
-
-      if (supportNb > 0 && supportLargeur_m > 0 && (supportHauteur_m > 0 || supportLongueur_m > 0)) {
-        const surfVertFaces = 2 * (supportLargeur_m * supportHauteur_m);
-        const surfHorizFaces = 2 * (supportLargeur_m * supportLongueur_m);
-        const surfVertChants = 2 * (supportEpaisseur_m * supportHauteur_m);
-        const surfHorizChants = 2 * (supportEpaisseur_m * supportLongueur_m);
-
-        surfUnSupport_m2 = surfVertFaces + surfHorizFaces + surfVertChants + surfHorizChants;
-        descSupport = `Support ~ larg=${supportLargeur_m.toFixed(3)} m, h=${supportHauteur_m.toFixed(3)} m, L=${supportLongueur_m.toFixed(3)} m.`;
-      }
-
-      const surfSupportsUnLimon_m2 = surfUnSupport_m2 * supportNb;
-      const surfTotalUnLimon_m2 = surfLimon_m2 + surfSupportsUnLimon_m2;
-      const surfTotalTousLimons_m2 = surfTotalUnLimon_m2 * nbLimon;
-
-      let html = "";
-      html += `<strong>Limon (1 pièce) :</strong><br>${descLimon}<br>`;
-      html += `Tarif : <em>${tarifKey ? tarifLabel : "tarif libre"}</em><br>`;
-      html += `Surface limon seul : <strong>${surfLimon_m2.toFixed(3)} m²</strong><br><br>`;
-
-      if (supportNb > 0 && surfUnSupport_m2 > 0) {
-        html += `<strong>Supports de marche :</strong><br>`;
-        html += `${descSupport}<br>`;
-        html += `Surface 1 support : ~${surfUnSupport_m2.toFixed(3)} m²<br>`;
-        html += `Nombre de supports : ${supportNb}<br>`;
-        html += `Surface supports / limon : <strong>${surfSupportsUnLimon_m2.toFixed(3)} m²</strong><br><br>`;
-      } else {
-        html += `<em>Aucun support de marche pris en compte (0 ou dimensions manquantes).</em><br><br>`;
-      }
-
-      html += `<strong>Surface totale pour 1 limon :</strong> ${surfTotalUnLimon_m2.toFixed(3)} m²<br>`;
-      html += `Quantité de limons identiques : ${nbLimon}<br>`;
-      html += `<strong>Surface totale (tous limons) :</strong> ${surfTotalTousLimons_m2.toFixed(3)} m²`;
-
-      resultLimon.innerHTML = html;
-
       return {
-        type: "Limon",
-        ref,
-        qte: nbLimon,
-        surfaceParPiece_m2: surfTotalUnLimon_m2,
-        surfaceTotale_m2: surfTotalTousLimons_m2,
+        ref: ref || "(sans nom)",
+        geoType,
         tarifKey,
-        tarifLabel
+        tarifLabel,
+        modeFacturation,
+        qte,
+        surfParPiece_m2,
+        longueurParPiece_m,
+        totalSurf_m2,
+        totalLong_m,
+        prix,
+        poudreTotal,
       };
     }
 
-    document.getElementById("btnCalcLimon").addEventListener("click", calcLimonPiece);
+    document.getElementById("btnCalcPiece").addEventListener("click", calcPiece);
 
-    // Recap devis
-    const prixM2Input = document.getElementById("prixM2");
-    const poudreM2Input = document.getElementById("poudreM2");
+    // ===== RECAP DEVIS =====
     const tableBody = document.querySelector("#tableDevis tbody");
     const totauxDiv = document.getElementById("totauxDevis");
-    const btnResetDevis = document.getElementById("btnResetDevis");
     let devisItems = [];
 
-    function ajouterAuDevis(item) {
-      if (!item) return;
-
-      let prixM2 = parseNumber(prixM2Input.value);
-      const poudreM2 = parseNumber(poudreM2Input.value);
-
-      if (item.tarifKey) {
-        const t = getTarifFromKey(item.tarifKey);
-        if (t > 0) prixM2 = t;
-      }
-
-      const prix = prixM2 > 0 ? item.surfaceTotale_m2 * prixM2 : 0;
-      const poudre = poudreM2 > 0 ? item.surfaceTotale_m2 * poudreM2 : 0;
-
-      devisItems.push({
-        ref: item.ref && item.ref !== "" ? item.ref : "(sans nom)",
-        type: item.type,
-        qte: item.qte,
-        surfPiece: item.surfaceParPiece_m2,
-        surfTotale: item.surfaceTotale_m2,
-        prix,
-        poudre
-      });
-
-      rafraichirTableDevis();
-    }
-
-    function rafraichirTableDevis() {
+    function refreshDevis() {
       tableBody.innerHTML = "";
-      let totalSurf = 0, totalPrix = 0, totalPoudre = 0;
+      let totSurf = 0, totLong = 0, totPrix = 0, totPoudre = 0;
 
-      devisItems.forEach((it, index) => {
-        totalSurf += it.surfTotale;
-        totalPrix += it.prix;
-        totalPoudre += it.poudre;
+      devisItems.forEach((it, i) => {
+        totSurf += it.totalSurf_m2;
+        totLong += it.totalLong_m;
+        totPrix += it.prix;
+        totPoudre += it.poudreTotal;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${index + 1}</td>
+          <td>${i + 1}</td>
           <td>${it.ref}</td>
-          <td>${it.type}</td>
+          <td>${it.tarifLabel}</td>
           <td class="text-right">${it.qte}</td>
-          <td class="text-right">${it.surfPiece.toFixed(3)}</td>
-          <td class="text-right">${it.surfTotale.toFixed(3)}</td>
-          <td class="text-right">${it.prix > 0 ? it.prix.toFixed(2) : "-"}</td>
-          <td class="text-right">${it.poudre > 0 ? it.poudre.toFixed(2) : "-"}</td>
+          <td class="text-right">${it.surfParPiece_m2.toFixed(3)}</td>
+          <td class="text-right">${it.longueurParPiece_m.toFixed(3)}</td>
+          <td class="text-right">${it.totalSurf_m2.toFixed(3)}</td>
+          <td class="text-right">${it.totalLong_m.toFixed(3)}</td>
+          <td class="text-right">${it.prix.toFixed(2)}</td>
+          <td class="text-right">${it.poudreTotal.toFixed(2)}</td>
         `;
         tableBody.appendChild(tr);
       });
@@ -1176,25 +1169,23 @@
       if (!devisItems.length) {
         totauxDiv.textContent = "Aucun élément pour l’instant.";
       } else {
-        let txt = `Total surface : <strong>${totalSurf.toFixed(3)} m²</strong>`;
-        if (totalPrix > 0) txt += ` – Total prix estimatif : <strong>${totalPrix.toFixed(2)} €</strong>`;
-        if (totalPoudre > 0) txt += ` – Poudre estimée : <strong>${totalPoudre.toFixed(2)} kg</strong>`;
+        let txt = `Total surface : <strong>${totSurf.toFixed(3)} m²</strong> – Longueur : <strong>${totLong.toFixed(3)} m</strong>`;
+        txt += ` – Prix total estimatif : <strong>${totPrix.toFixed(2)} €</strong>`;
+        if (totPoudre > 0) txt += ` – Poudre totale : <strong>${totPoudre.toFixed(2)} kg</strong>`;
         totauxDiv.innerHTML = txt;
       }
     }
 
-    btnResetDevis.addEventListener("click", () => {
-      devisItems = [];
-      rafraichirTableDevis();
+    document.getElementById("btnAddDevis").addEventListener("click", () => {
+      const item = calcPiece();
+      if (!item) return;
+      devisItems.push(item);
+      refreshDevis();
     });
 
-    document.getElementById("btnAddSimple").addEventListener("click", () => {
-      const item = calcSimplePiece();
-      ajouterAuDevis(item);
-    });
-    document.getElementById("btnAddLimon").addEventListener("click", () => {
-      const item = calcLimonPiece();
-      ajouterAuDevis(item);
+    document.getElementById("btnResetDevis").addEventListener("click", () => {
+      devisItems = [];
+      refreshDevis();
     });
   </script>
 </body>
